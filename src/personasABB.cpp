@@ -73,20 +73,39 @@ TPersonasLDE aTPersonasLDE(TPersonasABB personasABB) {
 ///////////////////////////////////////////////////////////////////////////
 
 nat amplitudTPersonasABB(TPersonasABB personasABB) {
-    if (personasABB != NULL) {
-        colaPersonasABB c = crearTColaPersonasABB;
-        int nivel = 0;
-        while (cantidadTPersonasABB(c->personas) > 0)
-    }
-    return 0;
 }
-
+    //Verificar
 TPilaPersona serializarTPersonasABB(TPersonasABB personasABB) {
-    return NULL;
+    TPilaPersona p = crearTPilaPersona();
+    TColaPersonasABB c = crearTColaPersonasABB();
+    while (!esVacioTPersonasABB(personasABB)) {
+        encolarEnTColaPersonasABB(personasABB, c);
+        apilarEnTPilaPersona(p, copiarTPersona(personasABB->persona));
+        if (!esVacioTPersonasABB(personasABB->izq)) {
+            encolarEnTColaPersonasABB(personasABB->izq, c);
+            apilarEnTPilaPersona(p, copiarTPersona(personasABB->izq->persona));
+        }
+        if (!esVacioTPersonasABB(personasABB->der)) {
+            encolarEnTColaPersonasABB(personasABB->der, c);
+            apilarEnTPilaPersona(p, copiarTPersona(personasABB->der->persona));
+        }
+        desencolarDeTColaPersonasABB(c);
+
+    }
+    liberarTColaPersonasABB(c); 
+    return pila;
 }
 
 TPersonasABB deserializarTPersonasABB(TPilaPersona &pilaPersonas) {
-    return NULL;
+
+    TPersonasABB t = crearTpersonasABB();
+    while (cantidadEnTPilaPersona(p) > 0) {
+        insertarTPersonasABB(t, copiarTPersona(cimaDeTPilaPersona(p))); // CREO que este codigo se puede optimizar sin usar el insertar...
+        desapilarDeTPilaPersona(p);
+    }
+
+    liberarTPilaPersona(p);
+    return t;
 }
 
 ///////////////////////////////////////////////////////////////////////////
